@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# node
+node_modules/
+npm-debug.log*
+
+# build output
+dist/
+build/
+
+# dotenv
+.env
