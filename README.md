@@ -21,7 +21,7 @@ calculator/
 
 ## Class Naming Convention
 
-### 기본 원칙
+1️⃣ 기본 원칙
 
 - 이 프로젝트는 BEM(Block Element Modifier) 네이밍 규칙을 따릅니다.
 - calculator는 축약하여 `calc`로 사용합니다.
@@ -29,12 +29,11 @@ calculator/
 ```plaintext
 .calc__display     /* calculator의 display 영역 */
 .calc__keypad      /* calculator의 keypad 영역 */
-
 ```
 
 <br>
 
-### 버튼
+2️⃣ 버튼
 
 - `button` 요소는 클래스명에서 `btn`으로 축약하여 사용합니다.
 
@@ -52,7 +51,7 @@ calculator/
 
 <br>
 
-### 예외: 유틸리티 클래스는 BEM 대상 아님
+⚠️ 예외: 유틸리티 클래스는 BEM 대상 아님
 
 ```plaintext
 .p-40
@@ -64,7 +63,7 @@ calculator/
 
 <br>
 
-### 예외: `.calc-container`는 독립 스타일링을 위한 Wrapper
+⚠️ 예외: `.calc-container`는 독립 스타일링을 위한 Wrapper
 
 ```plaintext
 .calc-container
