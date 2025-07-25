@@ -7,9 +7,31 @@
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <section class="calculator-container p-40">
-      <div class="display p-40"></div>
-      <div class="buttons p-40"></div>
+    <h1 class="a11y-hidden">Calculator</h1>
+    <section class="calculator">
+      <div class="calc-container p-40">
+        <!-- calculator window buttons -->
+        <div class="calc__window-btns">
+          <button
+            class="calc__window-btn--close btn-xs"
+            aria-label="화면 닫기"
+          ></button>
+          <button
+            class="calc__window-btn--min btn-xs"
+            aria-label="화면 최소화"
+          ></button>
+          <button
+            class="calc__window-btn--max btn-xs"
+            aria-label="화면 최대화"
+          ></button>
+        </div>
+
+        <!-- calculator display -->
+        <div class="calc__display p-40"></div>
+
+        <!-- calculator-keypad -->
+        <div class="calc__keypad p-40"></div>
+      </div>
     </section>
   </body>
 </html>
