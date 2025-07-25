@@ -8,9 +8,6 @@
 html,
 body {
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 button {
@@ -30,13 +27,19 @@ button {
 }
 
 /* calculator-layout */
+.calculator {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .calc-container {
   width: 600px;
   height: 800px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 60px;
   border: 4px solid #2d2f36;
 }
 
