@@ -33,7 +33,7 @@
 - `display`와 `buttons`를 flex를 사용하여 적절하게 배치합니다.
 - 계산기 컨테이너의 내부 여백을 적절하게 설정합니다.
 
-<br>
+  <br>
 
 #### STEP 2. 계산기 상단에 버튼 추가하기 (도전미션)
 
@@ -44,8 +44,9 @@
 - 맥북 계산기의 디자인 모티브로 하지만, 기능은 동작하지 않아도 됩니다.
 - 버튼은 원 형태이고, 각 버튼이 일정한 간격을 갖도록 구현해야 합니다.
 
-<br>
-</details>
+      <br>
+
+  </details>
 
 <details>
 <summary>DAY2 미션지</summary>
@@ -90,6 +91,70 @@
 - 버튼을 클릭하면(`active`) 배경색이 잠시 변경되도록 하세요.
 
 <br>
+</details>
+
+<details>
+<summary>DAY3 미션지</summary>
+
+### STEP 1. 버튼 클릭 시 디스플레이에 표시되도록 만들기
+
+### 1-1. 각 버튼을 클릭했을 때 console에 각 버튼의 value가 나오도록 하기
+
+요구사항
+
+1. 각 버튼을 클릭했을 때 해당 버튼의 값을 콘솔에 출력하세요.
+
+<br>
+
+구현 단계
+
+1. `script.js`
+
+- 모든 버튼 요소를 선택합니다.
+- 각 버튼에 클릭 이벤트 리스너를 추가합니다.
+  - 참고: [MDN: 배열 메서드 forEach()](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+- 버튼이 클릭되었을 때, 해당 버튼의 값을 콘솔에 출력합니다.
+  - 참고: [MDN: Event.target](https://developer.mozilla.org/ko/docs/Web/API/Event/target)
+
+<br>
+
+### 1-2. 숫자를 디스플레이에 표시하기
+
+요구 사항
+
+- 숫자 버튼을 클릭하면 디스플레이에 해당 숫자가 표시되도록 하세요.
+- 초기 디스플레이 값이 `0`일 때는 클릭한 숫자로 바뀌어야 합니다.
+- 초기 값이 `0`이 아닐 때는 클릭한 숫자가 뒤에 추가되어야 합니다.
+- 클래스가 `number`인 버튼에 대해서만 처리하세요.
+
+<br>
+
+구현 단계
+
+1. `script.js`
+
+- 모든 버튼 요소와 디스플레이 요소를 선택합니다.
+- 각 버튼에 클릭 이벤트 리스너를 추가합니다.
+- 버튼이 클릭되었을 때, 클래스가 `number`인 경우 디스플레이에 값을 표시합니다.
+- 디스플레이가 `0`일 때는 클릭한 숫자로 바뀌어야 합니다.
+- 디스플레이가 `0`이 아닐 때는 클릭한 숫자가 뒤에 추가되어야 합니다.
+
+<br>
+
+### STEP 2. 소수점과 Clear 기능 추가하기
+
+요구 사항
+
+- 소수점(`.`) 버튼을 클릭하면 디스플레이에 소수점을 추가하세요. (이미 소수점이 있는 경우 추가되지 않도록)
+- `C` 버튼을 클릭하면 디스플레이를 `0`으로 초기화하세요.
+
+<br>
+
+### 추가 참고 자료
+
+- [MDN: JavaScript 이벤트](https://developer.mozilla.org/ko/docs/Web/API/Event)
+- [MDN: Element.classList](https://developer.mozilla.org/ko/docs/Web/API/Element/classList)
+
 </details>
 
 <br>
