@@ -8,8 +8,8 @@
   </head>
   <body>
     <main class="calculator">
-      <h1 class="a11y-hidden">Calculator</h1>
-      <div class="calc-container p-40">
+      <h1 class="a11y-hidden">계산기</h1>
+      <div class="calc-container">
         <!-- calculator window buttons -->
         <div class="calc__window-btns">
           <button
@@ -30,10 +30,43 @@
         </div>
 
         <!-- calculator display -->
-        <div class="calc__display p-40"></div>
+        <!-- 
+          - 스크린리더 자동 읽기: role="status" + aria-live="polite"
+          - 키보드 포커스 가능: tabindex="0"
+          - input 대신 div 사용 (직접 입력 없이 버튼 클릭으로만 동작)
+        -->
+        <div
+          class="calc__display"
+          role="status"
+          aria-live="polite"
+          aria-label="계산 결과"
+          tabindex="0"
+        >
+          0
+        </div>
 
-        <!-- calculator keypad -->
-        <div class="calc__keypad p-40"></div>
+        <!-- calculator buttons -->
+        <div class="calc__buttons">
+          <button class="button function" aria-label="부호 전환" title="부호 전환">±</button>
+          <button class="button function" aria-label="초기화" title="초기화">C</button>
+          <button class="button function" aria-label="퍼센트" title="퍼센트">%</button>
+          <button class="button operator" aria-label="나누기" title="나누기">/</button>
+          <button class="button number">7</button>
+          <button class="button number">8</button>
+          <button class="button number">9</button>
+          <button class="button operator" aria-label="곱하기" title="곱하기">*</button>
+          <button class="button number">4</button>
+          <button class="button number">5</button>
+          <button class="button number">6</button>
+          <button class="button operator" aria-label="빼기" title="빼기">-</button>
+          <button class="button number">1</button>
+          <button class="button number">2</button>
+          <button class="button number">3</button>
+          <button class="button operator" aria-label="더하기" title="더하기">+</button>
+          <button class="button number zero">0</button>
+          <button class="button decimal" aria-label="소수점" title="소수점">.</button>
+          <button class="button equals" aria-label="계산하기" title="계산하기">=</button>
+        </div>
       </div>
     </main>
   </body>
