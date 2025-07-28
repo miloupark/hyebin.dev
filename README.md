@@ -1,9 +1,13 @@
 # 🧮 Calculator | JS Final Mission in OZ
 
-- 나만의 계산기 구현하기
-- 기간: 2025-07-25 ~ 2025-07-30
-- 과정: [회고 & 정리](https://binyard.me/OZ/fe/mission.html)
-- 디자인: [Figma](https://www.figma.com/design/hh1hbNBF5992A1dQYb6INU/Calculator?node-id=0-1&t=AJexyvuflp4TE5th-1)
+![계산기 디자인](./src/images/calculator_ui.png)
+
+### 나만의 계산기 구현하기
+
+- 🚀 [Live Demo (GitHub Pages)](https://miloupark.github.io/calculator/)
+- 작업 기간: 2025-07-25 ~ 2025-07-30
+- 작업 로그: [Binyard Blog](https://binyard.me/OZ/fe/mission.html)
+- 디자인 시안: [Figma](https://www.figma.com/design/hh1hbNBF5992A1dQYb6INU/Calculator?node-id=0-1&t=AJexyvuflp4TE5th-1)
 
 <br>
 
