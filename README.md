@@ -161,11 +161,12 @@
 
 ## 📁 Folder Structure
 
-```bash
+```plaintext
 calculator/
 ├── index.html
 ├── src/
-│ └── style.css
+│   ├── style.css
+│   └── script.js
 ├── README.md
 ├── .gitignore
 └── package.json
