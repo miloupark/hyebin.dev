@@ -2,6 +2,21 @@
 const calcButtons = document.querySelectorAll(".button"); // 계산기 버튼들
 const calcDisplay = document.querySelector(".calc__display"); // 계산기 화면
 
+// display의 글자 수에 따라 폰트 크기 줄이는 함수 (단, 최대 글자 수 제한 없음)
+function adjustDisplayFontSize() {
+  const displayTextLength = calcDisplay.textContent.length;
+
+  if (displayTextLength <= 14) {
+    calcDisplay.style.fontSize = "";
+  } else if (displayTextLength <= 20) {
+    calcDisplay.style.fontSize = "22px";
+  } else if (displayTextLength <= 26) {
+    calcDisplay.style.fontSize = "18px";
+  } else {
+    calcDisplay.style.fontSize = "12px";
+  }
+}
+
 // 버튼 클릭 시 실행
 const btnClick = (event) => {
   // 클릭된 버튼 관련 변수 (지역)
@@ -16,13 +31,20 @@ const btnClick = (event) => {
   const isOperator = clickedBtn.classList.contains("operator"); // 연산자 버튼 여부 확인
   const isEqual = clickedBtn.classList.contains("equal"); // 결과 버튼 여부
 
+  let firstOperand = ""; // 첫 번째 피연산자
+  let operator = ""; // 연산자
+
   // 현재 display 화면(공백 제거된 문자열)
   const currentDisplay = calcDisplay.textContent.trim();
+
+  // display 변화 확인: true시, adjustDisplayFontSize() 실행
+  let changeDisplay = false;
 
   // 초기화(C) 버튼 클릭 시: 디스플레이 0으로 초기화
   if (isClear) {
     console.log(clickedBtnText);
     calcDisplay.textContent = 0;
+    changeDisplay = true;
     return; // 종료
   }
 
@@ -32,9 +54,19 @@ const btnClick = (event) => {
     return;
   }
 
-  // 연산자 버튼 클릭 시: 콘솔 출력
+  // 연산자 버튼 클릭 시
+  //  let firstOperand = ""; // 첫 번째 피연산자
+  // let operator = ""; // 연산자
   if (isOperator) {
-    console.log(clickedBtnText);
+    //
+    firstOperand = calcDisplay.textContent.trim();
+    operator = clickedBtnText;
+    calcDisplay.textContent = "";
+    if (firstOperand === null) {
+      calcDisplay = firstOperand;
+    }
+    console.log(operator);
+    console.log(firstOperand);
     return;
   }
 
@@ -49,6 +81,7 @@ const btnClick = (event) => {
     console.log(clickedBtnText);
     if (!currentDisplay.includes(".")) {
       calcDisplay.textContent = currentDisplay + clickedBtnText;
+      changeDisplay = true;
     }
     return; // 이미 포함되어 있다면 리턴(무시)
   }
@@ -61,6 +94,12 @@ const btnClick = (event) => {
     } else {
       calcDisplay.textContent += clickedBtnText;
     }
+    changeDisplay = true;
+  }
+
+  // display 변화 시, 폰트 사이즈 조절
+  if (changeDisplay) {
+    adjustDisplayFontSize();
   }
 };
 

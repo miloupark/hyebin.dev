@@ -111,6 +111,7 @@ button {
   border-radius: 8px;
   color: var(--gray-100);
   background-color: var(--black);
+  transition: font-size 0.2s ease;
 }
 
 /* buttons */
