@@ -1,9 +1,15 @@
-// 계산기 DOM 요소 (전역)
+// DOM 요소 (전역)
 const calcButtons = document.querySelectorAll(".button"); // 계산기 버튼들
 const calcDisplay = document.querySelector(".calc__display"); // 계산기 화면
 
-// display의 글자 수에 따라 폰트 크기 줄이는 함수 (단, 최대 글자 수 제한 없음)
-function adjustDisplayFontSize() {
+// 상태 변수 (전역)
+let firstOperand = null; // 첫 번째 피연산자
+let secondOperand = null; // 두 번째 피연산자
+let operator = null; // 연산자
+let shouldResetDisplay = false; // 다음 숫자 입력 시 디스플레이를 지워야 하는지 여부
+
+// display의 글자 수에 따라 폰트 크기 줄이는 함수 (단, 입력 제한은 없음)
+const adjustDisplayFontSize = () => {
   const displayTextLength = calcDisplay.textContent.length;
 
   if (displayTextLength <= 14) {
@@ -15,92 +21,129 @@ function adjustDisplayFontSize() {
   } else {
     calcDisplay.style.fontSize = "12px";
   }
-}
+};
 
-// 버튼 클릭 시 실행
-const btnClick = (event) => {
-  // 클릭된 버튼 관련 변수 (지역)
-  const clickedBtn = event.currentTarget; // 클릭된 버튼 요소
-  const clickedBtnText = clickedBtn.querySelector(".button__inner").textContent; // 버튼 안의 텍스트
+// 초기화(C) 버튼 클릭 시: 계산기 상태 초기화
+const clickClear = () => {
+  firstOperand = null;
+  secondOperand = null;
+  operator = null;
+  shouldResetDisplay = false;
+  calcDisplay.textContent = "0";
+  adjustDisplayFontSize();
+};
 
-  // 버튼 종류 확인
-  const isNumber = clickedBtn.classList.contains("number"); // 숫자 버튼 여부 확인
-  const isDecimal = clickedBtn.classList.contains("decimal"); // 소수점 버튼 여부 확인
-  const isClear = clickedBtn.classList.contains("clear"); // 초기화(C) 버튼 여부 확인
-  const isFunction = clickedBtn.classList.contains("function"); // 기능 버튼 여부 확인
-  const isOperator = clickedBtn.classList.contains("operator"); // 연산자 버튼 여부 확인
-  const isEqual = clickedBtn.classList.contains("equal"); // 결과 버튼 여부
-
-  let firstOperand = ""; // 첫 번째 피연산자
-  let operator = ""; // 연산자
-
-  // 현재 display 화면(공백 제거된 문자열)
+// 숫자 버튼 클릭 시
+const clickNumber = (number) => {
   const currentDisplay = calcDisplay.textContent.trim();
 
-  // display 변화 확인: true시, adjustDisplayFontSize() 실행
-  let changeDisplay = false;
-
-  // 초기화(C) 버튼 클릭 시: 디스플레이 0으로 초기화
-  if (isClear) {
-    console.log(clickedBtnText);
-    calcDisplay.textContent = 0;
-    changeDisplay = true;
-    return; // 종료
+  // 연산자 버튼을 누른 이후거나(true), 현재 디스플레이가 "0"이면 새로 입력
+  if (shouldResetDisplay || currentDisplay === "0") {
+    calcDisplay.textContent = number;
+    shouldResetDisplay = false;
+  } else {
+    // 이어서 숫자 입력
+    calcDisplay.textContent += number;
   }
 
-  // 결과 버튼
-  if (isEqual) {
-    console.log(clickedBtnText);
-    return;
+  adjustDisplayFontSize();
+};
+
+// 소수점 버튼 클릭 시
+const clickDecimal = () => {
+  const currentDisplay = calcDisplay.textContent.trim();
+
+  if (shouldResetDisplay) {
+    // 연산자 직후, 새 숫자를 시작하는 경우 "0."부터 시작
+    calcDisplay.textContent = "0.";
+    shouldResetDisplay = false;
+  } else if (!currentDisplay.includes(".")) {
+    // 소수점 없으면 추가
+    calcDisplay.textContent += ".";
   }
 
-  // 연산자 버튼 클릭 시
-  //  let firstOperand = ""; // 첫 번째 피연산자
-  // let operator = ""; // 연산자
-  if (isOperator) {
-    //
-    firstOperand = calcDisplay.textContent.trim();
-    operator = clickedBtnText;
-    calcDisplay.textContent = "";
-    if (firstOperand === null) {
-      calcDisplay = firstOperand;
-    }
-    console.log(operator);
-    console.log(firstOperand);
-    return;
+  adjustDisplayFontSize();
+};
+
+// 연산자 버튼 클릭 시
+const clickOperator = (value) => {
+  const currentDisplay = calcDisplay.textContent.trim();
+
+  // 첫번째 피연산자가 null이면 현재 값을 저장
+  if (firstOperand === null) {
+    firstOperand = currentDisplay;
+  } else if (operator && !shouldResetDisplay) {
+    // 기존 연산자가 있고, 새 숫자 입력이 있다면 계산 진행
+    secondOperand = currentDisplay;
+
+    const result = calculate(firstOperand, operator, secondOperand);
+    calcDisplay.textContent = String(result);
+    firstOperand = result;
   }
 
-  // 기능 버튼 클릭 시: 콘솔 출력
-  if (isFunction) {
-    console.log(clickedBtnText);
-    return;
-  }
+  operator = value; // 클릭한 연산기호 할당
+  shouldResetDisplay = true; // 새로운 숫자 입력 대기 상태로 설정
 
-  // 소수점 중복 입력 방지: 디스플레이에 소수점이 없다면 추가
-  if (isDecimal) {
-    console.log(clickedBtnText);
-    if (!currentDisplay.includes(".")) {
-      calcDisplay.textContent = currentDisplay + clickedBtnText;
-      changeDisplay = true;
-    }
-    return; // 이미 포함되어 있다면 리턴(무시)
-  }
+  console.log(`firstOperand: ${firstOperand}, operator: ${operator}`);
+};
 
-  // 숫자 클릭 시: 현재 화면이 0이면 클릭된 버튼의 값으로 대체, 아니면 이어 붙이기
-  if (isNumber) {
-    console.log(clickedBtnText);
-    if (currentDisplay === "0") {
-      calcDisplay.textContent = clickedBtnText;
-    } else {
-      calcDisplay.textContent += clickedBtnText;
-    }
-    changeDisplay = true;
-  }
+// = 버튼 클릭 시
+const clickEqual = () => {
+  if (firstOperand !== null && operator !== null) {
+    // 첫 번째 피연산자와 연산자가 null이 아니면
+    secondOperand = calcDisplay.textContent.trim();
 
-  // display 변화 시, 폰트 사이즈 조절
-  if (changeDisplay) {
+    const result = calculate(firstOperand, operator, secondOperand);
+    calcDisplay.textContent = String(result);
     adjustDisplayFontSize();
+
+    // 첫 번째 피연산자에 다음 계산을 이어가도록 결과 저장
+    firstOperand = result;
+    secondOperand = null;
+    operator = null;
+    shouldResetDisplay = true;
   }
+};
+
+// calculate 함수: 연산자에 따라 계산 결과 반환
+const calculate = (firstOperand, operator, secondOperand) => {
+  // 문자열을 부동소수점 숫자로 변환
+  const firstNum = parseFloat(firstOperand);
+  const secondNum = parseFloat(secondOperand);
+
+  // 연산 조건문
+  switch (operator) {
+    case "+":
+      return firstNum + secondNum;
+    case "-":
+      return firstNum - secondNum;
+    case "*":
+      return firstNum * secondNum;
+    case "/":
+      if (secondNum !== 0) {
+        return firstNum / secondNum;
+      } else {
+        // secondNum이 0이면 '정의되지 않음' 출력 (레퍼런스: 맥북 계산기)
+        return "정의되지 않음";
+      }
+    default:
+      return secondNum;
+  }
+};
+
+// 버튼 클릭 이벤트
+const btnClick = (event) => {
+  // 클릭된 버튼 요소 및 값
+  const clickedBtn = event.currentTarget; // 클릭한 버튼
+  const clickedBtnValue = clickedBtn.dataset.set; // 버튼에 설정된 데이터 값 (html data-set)
+
+  // 버튼 클래스에 따라 함수 호출
+  if (clickedBtn.classList.contains("clear")) return clickClear();
+  if (clickedBtn.classList.contains("number")) return clickNumber(clickedBtnValue);
+  if (clickedBtn.classList.contains("decimal")) return clickDecimal();
+  if (clickedBtn.classList.contains("operator")) return clickOperator(clickedBtnValue);
+  if (clickedBtn.classList.contains("equal")) return clickEqual();
+  if (clickedBtn.classList.contains("function")) return clickFunction(clickedBtnValue);
 };
 
 // 계산기 버튼에 클릭 이벤트 등록
