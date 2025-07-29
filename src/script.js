@@ -17,14 +17,12 @@ const btnClick = (event) => {
   // 현재 display 화면(공백 제거된 문자열)
   const currentDisplay = calcDisplay.textContent.trim();
 
+  // 🔍 디버깅용 출력 [3-1 단계 > 구현 단계 c번]
+  console.log(clickedBtnText);
+
   // 초기화(C) 버튼 클릭 시: 디스플레이 0으로 초기화
   if (isClear) {
     calcDisplay.textContent = 0;
-    return; // 종료
-  }
-
-  // 기능(C, ±, %) 버튼 클릭 시: 화면 반영 막기(임시)
-  if (isFunction) {
     return; // 종료
   }
 
@@ -42,16 +40,14 @@ const btnClick = (event) => {
   } else {
     calcDisplay.textContent += clickedBtnText;
   }
-
-  // 🔍 디버깅용 출력 [3-1 단계 > 구현 단계 c번]
-  console.log(clickedBtnText);
 };
 
 // 계산기 버튼에 클릭 이벤트 등록
 calcButtons.forEach((button) => {
   button.addEventListener("click", btnClick);
 });
+
 // 🔍 디버깅용 출력
-console.log(calcButtons);
+// console.log(calcButtons);
 // 계산기 버튼(.button)을 모두 선택하면 NodeList가 반환됨
 // NodeList는 유사 배열 객체지만, forEach() 메서드가 있어서 순회 가능
