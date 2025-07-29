@@ -13,21 +13,40 @@ const btnClick = (event) => {
   const isDecimal = clickedBtn.classList.contains("decimal"); // 소수점 버튼 여부 확인
   const isClear = clickedBtn.classList.contains("clear"); // 초기화(C) 버튼 여부 확인
   const isFunction = clickedBtn.classList.contains("function"); // 기능 버튼 여부 확인
+  const isOperator = clickedBtn.classList.contains("operator"); // 연산자 버튼 여부 확인
+  const isEqual = clickedBtn.classList.contains("equal"); // 결과 버튼 여부
 
   // 현재 display 화면(공백 제거된 문자열)
   const currentDisplay = calcDisplay.textContent.trim();
 
-  // 🔍 디버깅용 출력 [3-1 단계 > 구현 단계 c번]
-  console.log(clickedBtnText);
-
   // 초기화(C) 버튼 클릭 시: 디스플레이 0으로 초기화
   if (isClear) {
+    console.log(clickedBtnText);
     calcDisplay.textContent = 0;
     return; // 종료
   }
 
+  // 결과 버튼
+  if (isEqual) {
+    console.log(clickedBtnText);
+    return;
+  }
+
+  // 연산자 버튼 클릭 시: 콘솔 출력
+  if (isOperator) {
+    console.log(clickedBtnText);
+    return;
+  }
+
+  // 기능 버튼 클릭 시: 콘솔 출력
+  if (isFunction) {
+    console.log(clickedBtnText);
+    return;
+  }
+
   // 소수점 중복 입력 방지: 디스플레이에 소수점이 없다면 추가
   if (isDecimal) {
+    console.log(clickedBtnText);
     if (!currentDisplay.includes(".")) {
       calcDisplay.textContent = currentDisplay + clickedBtnText;
     }
@@ -35,10 +54,13 @@ const btnClick = (event) => {
   }
 
   // 숫자 클릭 시: 현재 화면이 0이면 클릭된 버튼의 값으로 대체, 아니면 이어 붙이기
-  if (currentDisplay === "0" && isNumber) {
-    calcDisplay.textContent = clickedBtnText;
-  } else {
-    calcDisplay.textContent += clickedBtnText;
+  if (isNumber) {
+    console.log(clickedBtnText);
+    if (currentDisplay === "0") {
+      calcDisplay.textContent = clickedBtnText;
+    } else {
+      calcDisplay.textContent += clickedBtnText;
+    }
   }
 };
 
