@@ -1,8 +1,8 @@
-# 🧮 Calculator | JS Final Mission in OZ
+# 🧮 Calculator
 
 ![계산기 디자인](./src/images/calculator_ui.png)
 
-### 나만의 계산기 구현하기
+### 나만의 계산기 구현하기 | JS Final Mission in OZ
 
 - 🚀 [Live Demo (GitHub Pages)](https://miloupark.github.io/calculator/)
 - 작업 기간: 2025-07-25 ~ 2025-07-30
