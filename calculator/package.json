@@ -1,21 +1,27 @@
 {
   "name": "calculator",
   "version": "1.0.0",
-  "description": "",
+  "description": "A custom calculator built with HTML, CSS, and JS as part of OZ bootcamp final mission",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/miloupark/calculator.git"
+    "url": "https://github.com/miloupark/hyebin.dev",
+    "directory": "calculator"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "calculator",
+    "javascript",
+    "oz",
+    "final-mission"
+  ],
+  "author": "miloupark",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/miloupark/calculator/issues"
+    "url": "https://github.com/miloupark/hyebin.dev/issues"
   },
-  "homepage": "https://github.com/miloupark/calculator#readme"
+  "homepage": "https://hyebin.dev/calculator"
 }
