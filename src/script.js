@@ -2,11 +2,11 @@
 const calcButtons = document.querySelectorAll(".button"); // 계산기 버튼들
 const calcDisplay = document.querySelector(".calc__display"); // 계산기 화면
 
-// 상태 변수 (전역)
+// 계산기 상태 변수 (전역)
 let firstOperand = null; // 첫 번째 피연산자
 let secondOperand = null; // 두 번째 피연산자
 let operator = null; // 연산자
-let shouldResetDisplay = false; // 새 숫자 입력 시 디스플레이를 초기화 여부
+let shouldResetDisplay = false; // 새 숫자 입력 시, 디스플레이 초기화 여부
 
 // display의 글자 수에 따라 폰트 크기 줄이는 함수 (단, 입력 제한은 없음)
 const adjustDisplayFontSize = () => {
@@ -23,7 +23,7 @@ const adjustDisplayFontSize = () => {
   }
 };
 
-// 초기화(C) 버튼 클릭 시: 계산기 상태 초기화
+// 초기화(C) 버튼 클릭 시: 계산기 상태 변수 초기화
 const clickClear = () => {
   firstOperand = null;
   secondOperand = null;
@@ -37,7 +37,7 @@ const clickClear = () => {
 const clickNumber = (number) => {
   const currentDisplay = calcDisplay.textContent.trim();
 
-  // 연산자 버튼을 누른 이후거나(true), 현재 디스플레이가 "0"이면 새로 입력
+  // 연산자 버튼을 누른 이후거나(true), 현재 디스플레이가 "0"이면 새 숫자로 반영
   if (shouldResetDisplay || currentDisplay === "0") {
     calcDisplay.textContent = number;
     shouldResetDisplay = false;
@@ -54,7 +54,7 @@ const clickDecimal = () => {
   const currentDisplay = calcDisplay.textContent.trim();
 
   if (shouldResetDisplay) {
-    // 연산자 직후, 새 숫자를 시작하는 경우 "0."부터 시작
+    // 연산자 다음, 새 숫자를 시작하는 경우 "0."부터 시작
     calcDisplay.textContent = "0.";
     shouldResetDisplay = false;
   } else if (!currentDisplay.includes(".")) {
@@ -69,20 +69,18 @@ const clickDecimal = () => {
 const clickOperator = (value) => {
   const currentDisplay = calcDisplay.textContent.trim();
 
-  // 첫번째 피연산자가 null이면 현재 값을 저장
   if (firstOperand === null) {
-    firstOperand = currentDisplay;
+    firstOperand = currentDisplay; // 첫 번째 피연산자가 null이면 현재 값을 저장
   } else if (operator && !shouldResetDisplay) {
-    // 기존 연산자가 있고, 새 숫자 입력이 있다면 계산 진행
-    secondOperand = currentDisplay;
+    secondOperand = currentDisplay; // 기존 연산자가 있고, 새 숫자 입력이 있다면 계산 진행
 
     const result = calculate(firstOperand, operator, secondOperand);
-    calcDisplay.textContent = String(result);
-    firstOperand = result;
+    calcDisplay.textContent = String(result); // 화면 출력 시 숫자 -> 문자열로 변경
+    firstOperand = result; // 계산 결과 다음 계산의 첫 번째 숫자로 저장
   }
 
-  operator = value; // 클릭한 연산기호 할당
-  shouldResetDisplay = true; // 새로운 숫자 입력 대기 상태로 설정
+  operator = value; // 클릭한 연산기호 저장
+  shouldResetDisplay = true; // 새로운 숫자 입력 -> display 초기화 상태 변경
 
   console.log(`firstOperand: ${firstOperand}, operator: ${operator}`);
 };
@@ -91,10 +89,10 @@ const clickOperator = (value) => {
 const clickEqual = () => {
   // 첫 번째 피연산자와 연산자가 null이 아니면
   if (firstOperand !== null && operator !== null) {
-    secondOperand = calcDisplay.textContent.trim();
+    secondOperand = calcDisplay.textContent.trim(); // 현재 값을 넣고 calculate() 실행
 
     const result = calculate(firstOperand, operator, secondOperand);
-    calcDisplay.textContent = String(result);
+    calcDisplay.textContent = String(result); // 화면 출력 시 숫자 -> 문자열로 변경
     adjustDisplayFontSize();
 
     // 첫 번째 피연산자에 다음 계산을 이어가도록 결과 저장
