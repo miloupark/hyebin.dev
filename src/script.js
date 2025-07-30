@@ -8,6 +8,18 @@ let secondOperand = null; // 두 번째 피연산자
 let operator = null; // 연산자
 let shouldResetDisplay = false; // 새 숫자 입력 시, 디스플레이 초기화 여부
 
+// 에러
+const isNotDefined = "정의되지 않음";
+
+// isNotDefined 체크 함수
+const checkNaN = () => {
+  calcDisplay.textContent = isNotDefined;
+  firstOperand = null;
+  secondOperand = null;
+  operator = null;
+  shouldResetDisplay = true;
+};
+
 // display의 글자 수에 따라 폰트 크기 줄이는 함수 (단, 입력 제한은 없음)
 const adjustDisplayFontSize = () => {
   const displayTextLength = calcDisplay.textContent.length;
@@ -53,6 +65,10 @@ const clickNumber = (number) => {
 const clickDecimal = () => {
   const currentDisplay = calcDisplay.textContent.trim();
 
+  if (currentDisplay === isNotDefined) {
+    clickClear();
+  }
+
   if (shouldResetDisplay) {
     // 연산자 다음, 새 숫자를 시작하는 경우 "0."부터 시작
     calcDisplay.textContent = "0.";
@@ -67,7 +83,13 @@ const clickDecimal = () => {
 
 // 연산자 버튼 클릭 시
 const clickOperator = (value) => {
-  const currentDisplay = calcDisplay.textContent.trim();
+  let currentDisplay = calcDisplay.textContent.trim();
+
+  // 화면에 "정의되지 않음"이면 clickClear() 호출 후 0부터 시작
+  if (currentDisplay === isNotDefined) {
+    clickClear();
+    currentDisplay = "0";
+  }
 
   if (firstOperand === null) {
     firstOperand = currentDisplay; // 첫 번째 피연산자가 null이면 현재 값을 저장
@@ -75,6 +97,12 @@ const clickOperator = (value) => {
     secondOperand = currentDisplay; // 기존 연산자가 있고, 새 숫자 입력이 있다면 계산 진행
 
     const result = calculate(firstOperand, operator, secondOperand);
+
+    if (result === isNotDefined) {
+      checkNaN();
+      return;
+    }
+
     calcDisplay.textContent = String(result); // 화면 출력 시 숫자 -> 문자열로 변경
     firstOperand = result; // 계산 결과 다음 계산의 첫 번째 숫자로 저장
   }
@@ -92,6 +120,13 @@ const clickEqual = () => {
     secondOperand = calcDisplay.textContent.trim(); // 현재 값을 넣고 calculate() 실행
 
     const result = calculate(firstOperand, operator, secondOperand);
+
+    // NaN 에러 확인
+    if (result === isNotDefined) {
+      checkNaN();
+      return;
+    }
+
     calcDisplay.textContent = String(result); // 화면 출력 시 숫자 -> 문자열로 변경
     adjustDisplayFontSize();
 
@@ -113,9 +148,40 @@ const clickFunction = (funcValue) => {
     case "±": // 현재 숫자의 부호 전환
       result = parseFloat(currentDisplay) * -1;
       break;
-    case "%": // 현재 숫자 퍼센트 반영
-      result = parseFloat(currentDisplay) / 100;
-      break;
+    case "%":
+      const currentNum = parseFloat(currentDisplay);
+
+      // 첫 번째 피연산자와 연산자가 null이 아니면, 즉 피연산자와 연산자가 있으면
+      if (firstOperand !== null && operator !== null) {
+        const firstNum = parseFloat(firstOperand);
+
+        switch (operator) {
+          case "+":
+            result = (firstNum * currentNum) / 100;
+            break;
+          case "-":
+            result = (firstNum * currentNum) / 100;
+            break;
+          case "*":
+            result = currentNum / 100;
+            break;
+          case "/":
+            result = currentNum / 100;
+            break;
+        }
+
+        secondOperand = result;
+        calcDisplay.textContent = String(result);
+        adjustDisplayFontSize();
+
+        return;
+      } else {
+        // 연산자 없는 경우
+        result = currentNum / 100;
+        secondOperand = result;
+        calcDisplay.textContent = String(result);
+        return;
+      }
     default:
       return; // 정의되지 않은 기능 고려
   }
@@ -130,6 +196,9 @@ const calculate = (firstOperand, operator, secondOperand) => {
   const firstNum = parseFloat(firstOperand);
   const secondNum = parseFloat(secondOperand);
 
+  // 피 연산자들 중 하나라도 NaN면 "정의되지 않음 처리"
+  if (isNaN(firstNum) || isNaN(secondNum)) return isNotDefined;
+
   // 연산 조건문
   switch (operator) {
     case "+":
@@ -143,7 +212,8 @@ const calculate = (firstOperand, operator, secondOperand) => {
         return firstNum / secondNum;
       } else {
         // secondNum이 0이면 '정의되지 않음' 출력 (레퍼런스: 맥북 계산기)
-        return "정의되지 않음";
+        // 이후 연산자, 숫자 입력 시 Nan 반환 이슈로 개선
+        return isNotDefined;
       }
     default:
       return secondNum; // 정의되지 않은 연산자 고려
