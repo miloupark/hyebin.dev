@@ -6,7 +6,7 @@ const calcDisplay = document.querySelector(".calc__display"); // 계산기 화�
 let firstOperand = null; // 첫 번째 피연산자
 let secondOperand = null; // 두 번째 피연산자
 let operator = null; // 연산자
-let shouldResetDisplay = false; // 다음 숫자 입력 시 디스플레이를 지워야 하는지 여부
+let shouldResetDisplay = false; // 새 숫자 입력 시 디스플레이를 초기화 여부
 
 // display의 글자 수에 따라 폰트 크기 줄이는 함수 (단, 입력 제한은 없음)
 const adjustDisplayFontSize = () => {
@@ -89,8 +89,8 @@ const clickOperator = (value) => {
 
 // = 버튼 클릭 시
 const clickEqual = () => {
+  // 첫 번째 피연산자와 연산자가 null이 아니면
   if (firstOperand !== null && operator !== null) {
-    // 첫 번째 피연산자와 연산자가 null이 아니면
     secondOperand = calcDisplay.textContent.trim();
 
     const result = calculate(firstOperand, operator, secondOperand);
@@ -100,7 +100,6 @@ const clickEqual = () => {
     // 첫 번째 피연산자에 다음 계산을 이어가도록 결과 저장
     firstOperand = result;
     secondOperand = null;
-    operator = null;
     shouldResetDisplay = true;
   }
 };
