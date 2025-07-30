@@ -102,6 +102,28 @@ const clickEqual = () => {
   }
 };
 
+// function 버튼 클릭 시
+const clickFunction = (funcValue) => {
+  const currentDisplay = calcDisplay.textContent.trim();
+  let result;
+
+  switch (funcValue) {
+    case "C": // 별도 초기화 함수(clickClear) 호출
+      return clickClear();
+    case "±": // 현재 숫자의 부호 전환
+      result = parseFloat(currentDisplay) * -1;
+      break;
+    case "%": // 현재 숫자 퍼센트 반영
+      result = parseFloat(currentDisplay) / 100;
+      break;
+    default:
+      return; // 정의되지 않은 기능 고려
+  }
+
+  calcDisplay.textContent = String(result);
+  adjustDisplayFontSize();
+};
+
 // calculate 함수: 연산자에 따라 계산 결과 반환
 const calculate = (firstOperand, operator, secondOperand) => {
   // 문자열을 부동소수점 숫자로 변환
@@ -124,7 +146,7 @@ const calculate = (firstOperand, operator, secondOperand) => {
         return "정의되지 않음";
       }
     default:
-      return secondNum;
+      return secondNum; // 정의되지 않은 연산자 고려
   }
 };
 
