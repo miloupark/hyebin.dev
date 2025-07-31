@@ -87,16 +87,16 @@ button {
 
 .calc__window-btn.close:hover {
   background-color: var(--red);
-  background-image: url(./images/ico_close.svg);
+  background-image: url(/calculator/src/images/ico_close.svg);
 }
 
 .calc__window-btn.min:hover {
   background-color: var(--yellow);
-  background-image: url(./images/ico_min.svg);
+  background-image: url(/calculator/src/images/ico_min.svg);
 }
 .calc__window-btn.max:hover {
   background-color: var(--green);
-  background-image: url(./images/ico_max.svg);
+  background-image: url(/calculator/src/images/ico_max.svg);
 }
 
 /* display */
