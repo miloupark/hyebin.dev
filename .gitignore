@@ -1,2 +1,36 @@
+# 🗂 Dependency folders
+**/node_modules/
+
+# 🛠 Build outputs
+**/dist/
+build/
+out/
+tmp/
+
+# 🎨 Sass / CSS artifacts
+.sass-cache/ 
+.cache/
+*.css.map
+
+# 🔄 Compiled CSS folder
+css/
+
+# 🔐 Environment variables
+.env
+.env.*
+
+# 🧪 Logs
+*.log
+npm-debug.log*
+
+# 💻 Editor configs
+.vscode/
+.idea/
+
+# 🍎 macOS system files
+.DS_Store
+
+# calculator
 /calculator/node_modules/
 /calculator/dist/
+
