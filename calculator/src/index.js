@@ -21,7 +21,7 @@ const checkNaN = () => {
 };
 
 // display의 글자 수에 따라 폰트 크기 줄이는 함수 (단, 입력 제한은 없음)
-const adjustDisplayFontSize = () => {
+const adjustFontSize = () => {
   const displayTextLength = calcDisplay.textContent.length;
 
   if (displayTextLength <= 14) {
@@ -42,7 +42,7 @@ const clickClear = () => {
   operator = null;
   shouldResetDisplay = false;
   calcDisplay.textContent = "0";
-  adjustDisplayFontSize();
+  adjustFontSize();
 };
 
 // 숫자 버튼 클릭 시
@@ -58,7 +58,7 @@ const clickNumber = (number) => {
     calcDisplay.textContent += number;
   }
 
-  adjustDisplayFontSize();
+  adjustFontSize();
 };
 
 // 소수점 버튼 클릭 시
@@ -78,7 +78,7 @@ const clickDecimal = () => {
     calcDisplay.textContent += ".";
   }
 
-  adjustDisplayFontSize();
+  adjustFontSize();
 };
 
 // 연산자 버튼 클릭 시
@@ -128,7 +128,7 @@ const clickEqual = () => {
     }
 
     calcDisplay.textContent = String(result); // 화면 출력 시 숫자 -> 문자열로 변경
-    adjustDisplayFontSize();
+    adjustFontSize();
 
     // 첫 번째 피연산자에 다음 계산을 이어가도록 결과 저장
     firstOperand = result;
@@ -172,7 +172,7 @@ const clickFunction = (funcValue) => {
 
         secondOperand = result;
         calcDisplay.textContent = String(result);
-        adjustDisplayFontSize();
+        adjustFontSize();
 
         return;
       } else {
@@ -187,7 +187,7 @@ const clickFunction = (funcValue) => {
   }
 
   calcDisplay.textContent = String(result);
-  adjustDisplayFontSize();
+  adjustFontSize();
 };
 
 // calculate 함수: 연산자에 따라 계산 결과 반환
