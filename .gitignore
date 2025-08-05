@@ -34,3 +34,6 @@ npm-debug.log*
 /calculator/node_modules/
 /calculator/dist/
 
+# planbee
+/planbee/node_modules/
+/planbee/dist/
