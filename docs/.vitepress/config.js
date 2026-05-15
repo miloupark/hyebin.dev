@@ -13,8 +13,8 @@ export default defineConfig({
       {
         text: "Resume",
         items: [
-          { text: "Hyebin Park", link: "/" },
-          { text: "Projects", link: "/projects" },
+          { text: "Projects", link: "/" },
+          // { text: "Projects", link: "/projects" },
         ],
       },
     ],
