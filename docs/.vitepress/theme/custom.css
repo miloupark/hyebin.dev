@@ -1,0 +1,20 @@
+/* 프로필 상단 영역 */
+.resume-hero {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.resume-profile img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 28px;
+}
+
+.resume-hero-content li {
+  color: var(--vp-c-text-2);
+  font-size: 15px;
+  line-height: 1.7;
+}

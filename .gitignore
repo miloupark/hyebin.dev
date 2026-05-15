@@ -37,3 +37,8 @@ npm-debug.log*
 # planbee
 /planbee/node_modules/
 /planbee/dist/
+
+# VitePress (docs)
+docs/.vitepress/cache
+
+.pnpm-store/
